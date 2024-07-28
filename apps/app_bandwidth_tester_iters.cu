@@ -123,7 +123,7 @@ void profileCopies(float *h_a,
 int main()
 {
     const int iters = 2001;
-    unsigned int nElements = 4 * 1024 * 1024;
+    unsigned int nElements = 16 * 256 * 1024;  // 256 * 1024 is 1 MB
     const unsigned int bytes = nElements * sizeof(float);
 
     // host arrays
