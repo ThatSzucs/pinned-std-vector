@@ -1,0 +1,5 @@
+# Find dependencies.. ..but luckily we have none.
+# include(CMakeFindDependencyMacro)
+# find_dependency(BAR 2.0)
+
+include("${CMAKE_CURRENT_LIST_DIR}/playgroundTargets.cmake")

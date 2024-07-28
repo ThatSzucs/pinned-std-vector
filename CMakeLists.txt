@@ -17,16 +17,12 @@ if(PIP_INSTALL)
     # # Python bindings
     # add_subdirectory(python)
 else()
-    # # Project code
-    # add_subdirectory(src)
-
-    # # Set warnings
-    # include(cmake/CompilerWarnings.cmake)
-    # set_advanced_warnings(playground)
+    # Project code
+    add_subdirectory(src)
     
-    # # Unit tests
-    # enable_testing()
-    # add_subdirectory(tests)
+    # Unit tests
+    enable_testing()
+    add_subdirectory(tests)
 
     # # Python bindings
     # add_subdirectory(python)

@@ -1,0 +1,12 @@
+# http://www.stroustrup.com/Programming/PPP-style.pdf
+# https://embeddedartistry.com/blog/2017/10/23/creating-and-enforcing-a-code-formatting-standard-with-clang-format/
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+# https://stackoverflow.com/a/14243688/12351436
+
+Language: Cpp
+BasedOnStyle: Microsoft
+BreakBeforeBraces: Stroustrup
+AlwaysBreakTemplateDeclarations: Yes
+BinPackArguments: true
+BinPackParameters: false
+AllowShortFunctionsOnASingleLine: Inline
