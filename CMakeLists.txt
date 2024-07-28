@@ -12,10 +12,10 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 if(PIP_INSTALL)
     # Project code
-    # add_subdirectory(src)
+    add_subdirectory(src)
 
-    # # Python bindings
-    # add_subdirectory(python)
+    # Python bindings
+    add_subdirectory(python)
 else()
     # Project code
     add_subdirectory(src)
@@ -25,7 +25,7 @@ else()
     add_subdirectory(tests)
 
     # # Python bindings
-    # add_subdirectory(python)
+    add_subdirectory(python)
 
     # Misc. mumbo-jumbo
     add_subdirectory(apps)
