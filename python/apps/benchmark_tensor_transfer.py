@@ -80,7 +80,8 @@ def vector_to_ndarray(
         durations.append(time.time() - time_start)
 
     duration = median(durations)
-    transfer_rate = 0
+    nbytes = src_array.nbytes
+    transfer_rate = nbytes / 1024**3 / duration
     print_result(descr, duration, transfer_rate)
 
 
@@ -96,7 +97,8 @@ def vector_to_tensor(
         durations.append(time.time() - time_start)
 
     duration = median(durations)
-    transfer_rate = 0
+    nbytes = src_tensor.numel() * src_tensor.element_size()
+    transfer_rate = nbytes / 1024**3 / duration
     print_result(descr, duration, transfer_rate)
 
 
