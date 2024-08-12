@@ -120,6 +120,6 @@ def main(num_bytes: int, iters: int):
 
 
 if __name__ == "__main__":
-    warmup(num_bytes=64 * 1024**2, iters=20)
-    main(num_bytes=16 * 1024**2, iters=400)
-    main(num_bytes=1 * 1024**2, iters=2001)
+    warmup(num_bytes=64 * 1024**2, iters=200)
+    main(num_bytes=16 * 1024**2, iters=10001)
+    main(num_bytes=1 * 1024**2, iters=10001)
