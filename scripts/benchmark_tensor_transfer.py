@@ -72,39 +72,31 @@ def profile_tensor(num_bytes: int, iters: int):
     # tensor.to() does not allow dst to be set as pinned.
     # Therefore tests such as "... to hp" do not exist.
 
+    # Prepare all containers in advance
+    t_host = torch.ones(num_bytes, dtype=torch.int8)
+    t_host_pinned = torch.ones(num_bytes, dtype=torch.int8, pin_memory=True)
+    t_device = torch.ones(num_bytes, dtype=torch.int8, device="cuda")
+
     print("\ntensor.to(device, dtype)")
 
-    src_t = torch.ones(num_bytes, dtype=torch.int8)
     dst_device = "cuda"
     dst_dtype = torch.int8
-    tensor_to_device_dtype(src_t, dst_device, dst_dtype, "h to d", iters)
+    tensor_to_device_dtype(t_host, dst_device, dst_dtype, "h to d", iters)
 
-    src_t = torch.ones(num_bytes, dtype=torch.int8, pin_memory=True)
     dst_device = "cuda"
     dst_dtype = torch.int8
-    tensor_to_device_dtype(src_t, dst_device, dst_dtype, "hp to d", iters)
+    tensor_to_device_dtype(t_host_pinned, dst_device, dst_dtype, "hp to d", iters)
 
-    src_t = torch.ones(num_bytes, dtype=torch.int8, device="cuda")
     dst_device = "cpu"
     dst_dtype = torch.int8
-    tensor_to_device_dtype(src_t, dst_device, dst_dtype, "d to h", iters)
+    tensor_to_device_dtype(t_device, dst_device, dst_dtype, "d to h", iters)
+
     print("\ntensor.copy_(src)")
 
-    src_t = torch.ones(num_bytes, dtype=torch.int8)
-    dst_t = torch.zeros(num_bytes, dtype=torch.int8, device="cuda")
-    tensor_copy(src_t, dst_t, "h to d", iters)
-
-    src_t = torch.ones(num_bytes, dtype=torch.int8, pin_memory=True)
-    dst_t = torch.zeros(num_bytes, dtype=torch.int8, device="cuda")
-    tensor_copy(src_t, dst_t, "hp to d", iters)
-
-    src_t = torch.ones(num_bytes, dtype=torch.int8, device="cuda")
-    dst_t = torch.zeros(num_bytes, dtype=torch.int8)
-    tensor_copy(src_t, dst_t, "d to h", iters)
-
-    src_t = torch.ones(num_bytes, dtype=torch.int8, device="cuda")
-    dst_t = torch.zeros(num_bytes, dtype=torch.int8, pin_memory=True)
-    tensor_copy(src_t, dst_t, "d to hp", iters)
+    tensor_copy(t_host, t_device, "h to d", iters)
+    tensor_copy(t_host_pinned, t_device, "hp to d", iters)
+    tensor_copy(t_device, t_host, "d to h", iters)
+    tensor_copy(t_device, t_host_pinned, "d to hp", iters)
 
 
 def main(num_bytes: int, iters: int):
