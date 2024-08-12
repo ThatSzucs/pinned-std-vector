@@ -67,7 +67,7 @@ def tensor_copy(
     print_result(descr, duration, transfer_rate)
 
 
-def profile_tensor_to_device_dtype(num_bytes: int, iters: int):
+def profile_tensor(num_bytes: int, iters: int):
     # tensor.to() does not care whether the other is pinned or pageable.
     # Therefore tests such as "... to hp" do not exist.
 
@@ -87,9 +87,6 @@ def profile_tensor_to_device_dtype(num_bytes: int, iters: int):
     dst_device = "cpu"
     dst_dtype = torch.int8
     tensor_to_device_dtype(src_t, dst_device, dst_dtype, "d to h", iters)
-
-
-def profile_tensor_copy(num_bytes: int, iters: int):
     print("\ntensor.copy_(src)")
 
     src_t = torch.ones(num_bytes, dtype=torch.int8)
@@ -115,8 +112,7 @@ def main(num_bytes: int, iters: int):
     print(f"Iterations: {iters}")
     print("Abbreviations: d-device, h-host, p-pinned")
 
-    profile_tensor_to_device_dtype(num_bytes, iters)
-    profile_tensor_copy(num_bytes, iters)
+    profile_tensor(num_bytes, iters)
 
 
 if __name__ == "__main__":
