@@ -69,39 +69,6 @@ def tensor_copy(
     print_result(descr, duration, transfer_rate)
 
 
-def vector_to_ndarray(
-    src_vector: pg.PageableI8Vector | pg.PinnedI8Vector, descr: str, iters: int
-):
-    """Calls vector.as_ndarray()."""
-    durations = []
-    for _ in range(iters):
-        time_start = time.time()
-        src_array = src_vector.as_ndarray()
-        durations.append(time.time() - time_start)
-
-    duration = median(durations)
-    nbytes = src_array.nbytes
-    transfer_rate = nbytes / 1024**3 / duration
-    print_result(descr, duration, transfer_rate)
-
-
-def vector_to_tensor(
-    src_vector: pg.PageableI8Vector | pg.PinnedI8Vector, descr: str, iters: int
-):
-    """Calls vector.as_ndarray() and torch.from_numpy() consecutively."""
-    durations = []
-    for _ in range(iters):
-        time_start = time.time()
-        src_array = src_vector.as_ndarray()
-        src_tensor = torch.from_numpy(src_array)
-        durations.append(time.time() - time_start)
-
-    duration = median(durations)
-    nbytes = src_tensor.numel() * src_tensor.element_size()
-    transfer_rate = nbytes / 1024**3 / duration
-    print_result(descr, duration, transfer_rate)
-
-
 def profile_tensor(num_bytes: int, iters: int):
     print("\n--- tensor ---")
 
@@ -136,8 +103,41 @@ def profile_tensor(num_bytes: int, iters: int):
     tensor_copy(src_t, dst_t, "d to hp", iters)
 
 
+def vector_to_ndarray(
+    src_vector: pg.PageableI8Vector | pg.PinnedI8Vector, descr: str, iters: int
+):
+    """Calls vector.as_ndarray()."""
+    durations = []
+    for _ in range(iters):
+        time_start = time.time()
+        src_array = src_vector.as_ndarray()
+        durations.append(time.time() - time_start)
+
+    duration = median(durations)
+    nbytes = src_array.nbytes
+    transfer_rate = nbytes / 1024**3 / duration
+    print_result(descr, duration, transfer_rate)
+
+
+def vector_to_tensor(
+    src_vector: pg.PageableI8Vector | pg.PinnedI8Vector, descr: str, iters: int
+):
+    """Calls vector.as_ndarray() and torch.from_numpy() consecutively."""
+    durations = []
+    for _ in range(iters):
+        time_start = time.time()
+        src_array = src_vector.as_ndarray()
+        src_tensor = torch.from_numpy(src_array)
+        durations.append(time.time() - time_start)
+
+    duration = median(durations)
+    nbytes = src_tensor.numel() * src_tensor.element_size()
+    transfer_rate = nbytes / 1024**3 / duration
+    print_result(descr, duration, transfer_rate)
+
+
 def profile_vector(num_bytes: int, iters: int):
-    print("\n--- vector ---")    
+    print("\n--- vector ---")
 
     print("\ntensor.to(device, dtype)")
 
