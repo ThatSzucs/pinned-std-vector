@@ -25,7 +25,7 @@ def warmup(num_bytes: int, iters: int):
 
 
 def print_result(descr: str, sec: float, gbs: float):
-    description = f"{descr:<16}"
+    description = f"{descr:<17}"
     duration = f"{sec*1e3:>10.2f} ms" if sec > 10e-3 else f"{sec*1e6:>10.2f} us"
     transfer_rate = f"{gbs:>8.1f} GB/s" if gbs < 1e3 else ""
 
@@ -68,7 +68,8 @@ def tensor_copy(
 
 
 def profile_tensor(num_bytes: int, iters: int):
-    # tensor.to() does not care whether the other is pinned or pageable.
+    print("\n--- tensor ---")
+    # tensor.to() does not allow dst to be set as pinned.
     # Therefore tests such as "... to hp" do not exist.
 
     print("\ntensor.to(device, dtype)")

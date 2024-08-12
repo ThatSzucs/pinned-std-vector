@@ -71,6 +71,8 @@ def tensor_copy(
 
 def profile_tensor(num_bytes: int, iters: int):
     print("\n--- tensor ---")
+    # tensor.to() does not allow dst to be set as pinned.
+    # Therefore tests such as "... to hp" do not exist.
 
     print("\ntensor.to(device, dtype)")
 
@@ -83,6 +85,11 @@ def profile_tensor(num_bytes: int, iters: int):
     dst_device = "cuda"
     dst_dtype = torch.int8
     tensor_to_device_dtype(src_t, dst_device, dst_dtype, "hp to d", iters)
+
+    src_t = torch.ones(num_bytes, dtype=torch.int8, device="cuda")
+    dst_device = "cpu"
+    dst_dtype = torch.int8
+    tensor_to_device_dtype(src_t, dst_device, dst_dtype, "d to h", iters)
 
     print("\ntensor.copy_(src)")
 
