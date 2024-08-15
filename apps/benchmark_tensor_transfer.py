@@ -68,7 +68,6 @@ def tensor_copy(
 
 
 def profile_tensor(num_bytes: int, iters: int):
-    print("\n--- tensor ---")
     # tensor.to() does not allow dst to be set as pinned.
     # Therefore tests such as "... to hp" do not exist.
 
