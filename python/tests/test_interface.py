@@ -15,8 +15,12 @@ def test_pageable_i8_vector():
     assert type(my_array) == np.ndarray
     assert my_array.dtype == np.int8
     assert my_array.shape == (count,)
-    assert my_array.max() == min(count, np.iinfo(my_array.dtype).max) 
-    assert my_array.min() == 0 if count < np.iinfo(my_array.dtype).max else np.iinfo(my_array.dtype).min
+    assert my_array.max() == min(count, np.iinfo(my_array.dtype).max)
+    assert (
+        my_array.min() == 0
+        if count < np.iinfo(my_array.dtype).max
+        else np.iinfo(my_array.dtype).min
+    )
 
 
 def test_pinned_i8_vector():
@@ -32,8 +36,12 @@ def test_pinned_i8_vector():
     assert type(my_array) == np.ndarray
     assert my_array.dtype == np.int8
     assert my_array.shape == (count,)
-    assert my_array.max() == min(count, np.iinfo(my_array.dtype).max) 
-    assert my_array.min() == 0 if count < np.iinfo(my_array.dtype).max else np.iinfo(my_array.dtype).min
+    assert my_array.max() == min(count, np.iinfo(my_array.dtype).max)
+    assert (
+        my_array.min() == 0
+        if count < np.iinfo(my_array.dtype).max
+        else np.iinfo(my_array.dtype).min
+    )
 
 
 # This code is part of the playgrounds project
