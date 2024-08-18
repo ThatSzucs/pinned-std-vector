@@ -1,0 +1,11 @@
+# CMake build directory
+build
+
+# Python 
+__pycache__
+
+# Python distribution and packaging
+*.egg-info/
+
+# VS Code config
+.vscode/
