@@ -1,4 +1,4 @@
-"""Tensor transfer benchmark testing binded `std::vector`s too.
+"""Tensor transfer benchmark testing bound `std::vector`s too.
 
 This script measures the transfer rate of Pytorch tensors copied between
 the host (CPU) and the device (GPU). The printed results are the medians
